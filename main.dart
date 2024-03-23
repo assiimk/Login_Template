@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp();
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,48 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SignInPage(),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen();
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds: 4),
+          () {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const SignInPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: FlutterLogo(
+          size: 200,
+        ),
+      ),
     );
   }
 }
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+  const SignInPage();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +92,7 @@ class _Logo extends StatelessWidget {
         Text(
           "Login",
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge,
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ],
     );
@@ -102,7 +138,6 @@ class _LoginFormState extends State<_LoginForm> {
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => HomePage(userName: _usernameController.text)),
@@ -126,7 +161,7 @@ class _LoginFormState extends State<_LoginForm> {
 class HomePage extends StatelessWidget {
   final String userName;
 
-  const HomePage({super.key, required this.userName});
+  const HomePage({Key? key, required this.userName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
